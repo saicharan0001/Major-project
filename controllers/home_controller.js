@@ -1,7 +1,9 @@
 //module.exports.action(fn name) = function(req,res){};
 
 module.exports.home=function(req,res){
-    return res.send('<h1>Controller is set</h1>');
+    return res.render('home',{
+        title:'Home'
+    });
 }
 module.exports.users=function(req,res){
     return res.send('<h1> you are in users page </h1>');

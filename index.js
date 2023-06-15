@@ -3,10 +3,13 @@ const app=express();
 const port=8000;
 const epxressLayouts=require('express-ejs-layouts');
 
+//import database connection from ./config/mongoose
+const db = require('./config/mongoose');
+
 //Using Layouts before accesing routes
 app.use(epxressLayouts);
 
-//extract styles ans scripts from subpages into the layout
+//extract styles and scripts from subpages into the layout
 app.set('layout extractStyles',true);
 app.set('layout extractScripts',true);
 
@@ -20,6 +23,7 @@ app.use('/',require('./routes'));
 app.set('view engine','ejs');
 app.set('views','./views');
 
+//this is required to listen the server in port(8000) if error runs callback function
 app.listen(port,(err)=>{
     if(err){
         console.log('error in server');

@@ -6,7 +6,7 @@ const epxressLayouts=require('express-ejs-layouts');
 //Using Layouts before accesing routes
 app.use(epxressLayouts);
 
-//extract styles ans scripts from subpages into the layout
+//extract styles and scripts from subpages into the layout
 app.set('layout extractStyles',true);
 app.set('layout extractScripts',true);
 

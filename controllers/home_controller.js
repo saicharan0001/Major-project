@@ -1,6 +1,8 @@
 //module.exports.action(fn name) = function(req,res){};
 
 module.exports.home=function(req,res){
+    console.log(req.cookies);
+    res.cookie('charan','20');
     return res.render('home',{
         title:'Home'
     });

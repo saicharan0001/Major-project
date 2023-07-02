@@ -11,7 +11,7 @@ passport.use(new LocalStrategy({
     User.findOne({email:email})
     .then((user)=>{
         if(!user||user.password!=password){
-            conosle.log("invalid username or password");
+            console.log("invalid username or password");
             //here done has two arguments one is null which tells there is no error and false tells authentication false;
             return done(null,false);
         }

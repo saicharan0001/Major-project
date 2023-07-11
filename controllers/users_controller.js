@@ -1,5 +1,7 @@
 const User = require('../models/users');
 const passport = require('passport');
+const fs = require('fs');
+const path = require('path');
 
 module.exports.users = function (req, res) {
     res.send('iam at user');
@@ -81,15 +83,30 @@ module.exports.profile = (req, res) => {
         });
 }
 
-module.exports.update = (req, res) => {
+//{name : req.body.name , email :req.body.email} is same as passing req.body it automatically fetches respective fields
+module.exports.update = async (req, res) => {
     if (req.user.id == req.params.id) {
-        //{name : req.body.name , email :req.body.email} is same as passing req.body it automatically fetches respective fields
-        User.findByIdAndUpdate(req.params.id, req.body)
-            .then((user) => {
-                return res.redirect('back');
-            })
+       let user = await User.findById(req.params.id);
+
+       //here the form is multipart encoded so cant use req.body directly
+       User.uploadedAvatar(req,res,function(err){
+        //now we can use req.body
+           user.name = req.body.name;
+           user.email = req.body.email;
+           if(req.file){
+           if(user.avatar){
+              fs.unlinkSync(path.join(__dirname,'..',user.avatar));
+           }
+           
+            //this is saving the path of the uploaded file into the avatar field in the user
+                user.avatar = User.avatarPath +'/'+req.file.filename;
+           }
+           user.save();
+           return res.redirect('back');
+       })
+
     }
     else{
-        return res.status(401).send('Unautharized');
-    }
+             return res.status(401).send('Unautharized');
+     }
 }

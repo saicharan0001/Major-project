@@ -36,7 +36,8 @@ app.set('layout extractStyles',true);
 app.set('layout extractScripts',true);
 //using css and scripts links for views
 app.use(express.static('./assets'));
-
+//make the upload path available to the browser
+app.use('/uploads',express.static(__dirname+'/uploads'));
 //middleware that takes cookies and encrypts it
 app.use(session({
     name:'codeial',

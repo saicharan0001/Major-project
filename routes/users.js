@@ -9,7 +9,9 @@ router.get('/sign-up',users_controller.signUp);
 router.get('/sign-in',users_controller.signIn);
 router.post('/create',users_controller.create);
 router.get('/sign-out',users_controller.destroySession);
-router.get('/profile',passport.checkAuthentication,users_controller.profile);
+router.get('/profile/:id',passport.checkAuthentication,users_controller.profile);
+router.post('/update/:id',passport.checkAuthentication,users_controller.update);
+
 //use passport as middleware to authenticate
 router.post('/create-session',passport.authenticate(
     'local',

@@ -4,15 +4,17 @@ const User = require('../models/users');
 
 //authentication using passport
 passport.use(new LocalStrategy({
-    usernameField:'email'
+    usernameField:'email',
+    passReqToCallback :true
 },
    //email password is passed on from route directly ans done is a callback fn
-   function(email,password,done){
+   function(req,email,password,done){
     User.findOne({email:email})
     .then((user)=>{
         if(!user||user.password!=password){
             console.log("invalid username or password");
             //here done has two arguments one is null which tells there is no error and false tells authentication false;
+            req.flash('error','Invalid Username/Password');
             return done(null,false);
         }
         //null : no error and user object is sent to serialize
@@ -22,6 +24,7 @@ passport.use(new LocalStrategy({
     .catch((err)=>{
         console.log("erorr in finding user passport");
         //done can take 2 arguments but here we are just using 1
+        req.flash('error',err);
         return done(err);
     })
    }

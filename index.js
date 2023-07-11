@@ -9,6 +9,7 @@ const db = require('./config/mongoose');
 //importing model
 const Users=require('./models/users');
 //middle ware to parse the form data in req.body as an object
+app.use(express.urlencoded());
 
 //used for session cookie
 const session=require('express-session');
@@ -16,6 +17,8 @@ const passport=require('passport');
 const passportLocal=require('./config/passport-local-strategy');
 const MongoStore = require('connect-mongo');
 const sassMiddleware = require('node-sass-middleware');
+const flash = require('connect-flash');
+const customMiddleware = require('./config/middleware');
 app.use(sassMiddleware({
     src:'./assets/scss',
     dest:'./assets/css',
@@ -24,7 +27,6 @@ app.use(sassMiddleware({
     prefix:'/css'
 }));
 
-app.use(express.urlencoded());
 //telling app to use cookieparser
 app.use(cookieParser());
 //Using Layouts before accesing routes
@@ -59,7 +61,8 @@ app.use(passport.session());
 //so when ever a new request comes in this middleware checks if the user is authenticated and then pass user data to views
 app.use(passport.setAuthenticatedUser);
 
-
+app.use(flash());
+app.use(customMiddleware.setFlash);
 //setting up view engines
 app.set('view engine','ejs');
 app.set('views','./views');

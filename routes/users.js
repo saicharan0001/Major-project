@@ -18,6 +18,13 @@ router.post('/create-session',passport.authenticate(
     {failureRedirect:'/users/sign-in'}
 ),users_controller.createSession);
 
+//requesting google
+router.get('/auth/google',passport.authenticate('google',{scope:['profile','email']}));
+//google sending deatails to callbackurl (http://localshost:8000/users/auth/google/callback)
+router.get('/auth/google/callback',passport.authenticate(
+    'google',
+    {failureRedirect:'/users/sign-in'}
+),users_controller.createSession);
 
 
 module.exports=router;

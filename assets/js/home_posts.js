@@ -11,7 +11,7 @@
                 url: '/posts/create',
                 data: newPostForm.serialize(),
                 success: function (data) {
-                    let newPost = newPostDom(data.data.post,data.username);
+                    let newPost = newPostDom(data.data.post, data.username);
                     $('#posts-list-container>ul').prepend(newPost);
                     shownoty(data.flash);
                     deletePost($(' .delete-post-button', newPost));
@@ -24,8 +24,7 @@
 
 
     // method to create a post in DOM
-    let newPostDom = function (post,username) {
-        console.log(post)
+    let newPostDom = function (post, username) {
         return $(`<li id="post-${post._id}">
                     <p>
                         
@@ -34,6 +33,7 @@
                         </small>
                        
                         ${post.content}
+                        <a href="/likes/toggle/?id=${post._id}&type=Post">0</a>
                         <br>
                         <small>
                         ${username}
@@ -78,7 +78,29 @@
         });
     }
 
-
+    //To delete the old posts via ajax 
+    let d = () => {
+        let posts = $('.delete-post-button');
+        var i = 0;
+        for (i = 0; i < posts.length; i++) {
+            let obj = posts.eq(i).attr("href");
+            posts.eq(i).on('click', function (e) {
+                e.preventDefault();
+                console.log(obj);
+                $.ajax({
+                    type: 'get',
+                    url: `${obj}`,
+                    success :function(data){
+                        console.log(data);
+                    $(`#post-${data.data.post_id}`).remove();
+                    shownoty(data.flash);
+                    }
+                })
+            })
+        }
+        return;
+    }
+    d();
     // TODO
     // let deletePost =(post)=>{
     //     $.ajax({
@@ -88,19 +110,20 @@
     //     })
     // }
 
-    let shownoty =(flash)=>{
+    let shownoty = (flash) => {
         console.log(flash.success);
-       if (flash.success && flash.success.length > 0) {
+        if (flash.success && flash.success.length > 0) {
             new Noty({
                 theme: 'relax',
                 text: `${flash.success}`,
                 type: 'success',
                 layout: 'topRight',
                 timeout: 1500
-                
-            }).show();    
+
+            }).show();
         }
     }
+
 
     createPost();
 }

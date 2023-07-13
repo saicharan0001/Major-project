@@ -6,6 +6,7 @@
         </small>
         <% } %>
         <%= comment.content %>
+        <a href="/likes/toggle/?id=<%=comment._id%>&type=Comment"><%=comment.likes.length%></a>
         <br>
         <small>
             <%= comment.user.name %>

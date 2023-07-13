@@ -11,7 +11,7 @@ router.post('/create',users_controller.create);
 router.get('/sign-out',users_controller.destroySession);
 router.get('/profile/:id',passport.checkAuthentication,users_controller.profile);
 router.post('/update/:id',passport.checkAuthentication,users_controller.update);
-
+router.use('/friends',require('./friends'));
 //use passport as middleware to authenticate
 router.post('/create-session',passport.authenticate(
     'local',

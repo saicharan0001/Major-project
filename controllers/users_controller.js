@@ -37,19 +37,19 @@ module.exports.create = function (req, res) {
             if (!user) {
                 User.create(req.body)
                     .then((user) => {
-                        req.flash('success','User Created Successfully');
+                        req.flash('success', 'User Created Successfully');
                         return res.redirect('/users/sign-in');
                     })
                     .catch((err) => {
-                        req.flash('error','Cant create user');
+                        req.flash('error', 'Cant create user');
                         console.log('error in creating user');
                         return;
                     })
             }
-            else{
-                req.flash('error','User already have an account try sign-in');
+            else {
+                req.flash('error', 'User already have an account try sign-in');
                 return res.redirect('back');
-            } 
+            }
         })
         .catch((err) => {
             console.log('error in finding user');
@@ -58,7 +58,7 @@ module.exports.create = function (req, res) {
 
 //create a session with user(create a Token)
 module.exports.createSession = function (req, res) {
-    req.flash('success','Logged in Successfully');
+    req.flash('success', 'Logged in Successfully');
     //assuming user is signed in
     return res.redirect('/');
 }
@@ -67,18 +67,36 @@ module.exports.createSession = function (req, res) {
 module.exports.destroySession = (req, res) => {
     req.logout((err) => {
         if (err) return next(err);
-        req.flash('success','You are Logged out');
+        req.flash('success', 'You are Logged out');
         return res.redirect('/');
     })
 }
 
 //render profile page
-module.exports.profile = (req, res) => {
+module.exports.profile = async (req, res) => {
+    //req.user.id is us
+    //req.params.id is friend
+    let me = await User.findById(req.user.id);
+    let myfriends = me.friends;
+    let havefriend = false;
+    for (i of myfriends) {
+        if (i._id == req.params.id) {
+            havefriend = true;
+        }
+    }
+    let cur;
+    if(havefriend){
+        cur = 'Unfollow'
+    }
+    else{
+        cur = 'Follow'
+    }
     User.findById(req.params.id)
         .then((user) => {
             res.render('user_profile', {
                 title: 'User Profile',
-                profile_user: user
+                profile_user: user,
+                cur: cur
             });
         });
 }
@@ -86,27 +104,27 @@ module.exports.profile = (req, res) => {
 //{name : req.body.name , email :req.body.email} is same as passing req.body it automatically fetches respective fields
 module.exports.update = async (req, res) => {
     if (req.user.id == req.params.id) {
-       let user = await User.findById(req.params.id);
+        let user = await User.findById(req.params.id);
 
-       //here the form is multipart encoded so cant use req.body directly
-       User.uploadedAvatar(req,res,function(err){
-        //now we can use req.body
-           user.name = req.body.name;
-           user.email = req.body.email;
-           if(req.file){
-           if(user.avatar){
-              fs.unlinkSync(path.join(__dirname,'..',user.avatar));
-           }
-           
-            //this is saving the path of the uploaded file into the avatar field in the user
-                user.avatar = User.avatarPath +'/'+req.file.filename;
-           }
-           user.save();
-           return res.redirect('back');
-       })
+        //here the form is multipart encoded so cant use req.body directly
+        User.uploadedAvatar(req, res, function (err) {
+            //now we can use req.body
+            user.name = req.body.name;
+            user.email = req.body.email;
+            if (req.file) {
+                if (user.avatar) {
+                    fs.unlinkSync(path.join(__dirname, '..', user.avatar));
+                }
+
+                //this is saving the path of the uploaded file into the avatar field in the user
+                user.avatar = User.avatarPath + '/' + req.file.filename;
+            }
+            user.save();
+            return res.redirect('back');
+        })
 
     }
-    else{
-             return res.status(401).send('Unautharized');
-     }
+    else {
+        return res.status(401).send('Unautharized');
+    }
 }

@@ -6,7 +6,9 @@
         </small>
         <% } %>
         <%= comment.content %>
+        <% if (locals.user && locals.user.id == post.user.id){ %>
         <a href="/likes/toggle/?id=<%=comment._id%>&type=Comment"><%=comment.likes.length%></a>
+        <%}%>
         <br>
         <small>
             <%= comment.user.name %>

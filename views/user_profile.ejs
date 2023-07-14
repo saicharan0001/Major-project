@@ -1,32 +1,141 @@
 <link rel="stylesheet" href="/css/user_profile.css">
 
+<div class="big-container">
 
-<% if(user.id == profile_user.id){ %>
-    <!-- if user matches then show the form -->
-    <img src="<%=user.avatar%>" alt="<%=user.name%>" width="100" >
+    <!-- * -->
+        <div class="left-container">
+            <div class="user-details">
+                <img src="<%=profile_user.avatar%>" alt="<%=profile_user.name%>" width="175" style="border-radius: 50%;">
+                <p id="user-name">
+                    <%=profile_user.name%>
+                </p>
+                <p id="user-bio" style="font-size: large;">Lorem ipsum dolor, sit amet consectetur</p>
+                <% if(user.id!=profile_user.id){ %>
+                <p id="btns">
+                <a href="/users/friends/?id=<%=profile_user.id%>" id="follow-btn"><button style="font-size: larger; color:white"><%=cur%></button></a>
+                <a href="" id="message-btn"><button style="font-size: larger; color:black">Message</button></a>
+                </p>
+                <%}%>
+            </div>
+
+            <div class="user-info">
+                <div id="posts-count" style="text-align: center;">
+                    <p><b>98</b></p>
+                    <p>Posts</p>
+                </div>
+                <div id="friends-count" style="text-align: center;">
+                    <p><b>200</b></p>
+                    <p>Friends</p>
+                </div>
+                <div id="likes-count" style="text-align: center;">
+                    <p><b>200</b></p>
+                    <p>likes</p>
+                </div>
+            </div>
+            <% if(user.id==profile_user.id){ %>
+            <div class="edit-profile">
+                <b>Edit Profile</b>
+                <form action="/users/update/<%= profile_user.id %>" enctype="multipart/form-data" method="POST">
+                    <input type="text" name="name" placeholder="Your Name" value="<%= profile_user.name %>" required
+                        class="input-fields" style="border: none; border-bottom: 1px solid grey;">
+                        
+                    <input type="email" name="email" placeholder="Your Email" value="<%= profile_user.email %>" required
+                        class="input-fields" style="border: none; border-bottom: 1px solid grey;">
+                        <label for="avatar" class="custom-file-upload">Choose File</label>
+                        <input type="file" name="avatar" id="avatar" class="file-input" style="margin:10px 0">
+                    <br>
+                    <input type="submit" value="Update" id="update-button">
+                </form>
+            </div>
+            <%}%>
+        </div>
+        <div class="middle-container">
+            <div class="posts-content">
+            <% if(user.id==profile_user.id){ %>
+                <div>
+                    <h3>new Post</h3>
+                </div>
+                <div class="new-post">
+                    <form action="/posts/postpic" enctype="multipart/form-data" method="POST" id="new-postpic-form">
+                        <p>
+                            <input class="custom-file-input" type="file" name="postpic" id="postpic">
+                            <label for="postpic">
+                                <span>Choose a file</span>
+                            </label>
+                        </p>
+                        <input type="text" name="content" placeholder="add caption"
+                            style="width: 20vw; height: 30px; border: none; border-bottom: 1px solid grey;">
+                        <input type="submit" value="post" id="post-btn">
+                    </form>
+                </div>
+                <%}%>
+                <!-- <%for(i of allpostpics){%>
+                <img src="<%=i.postpic%>" alt="" width="100">
+                <p><%=i.content%></p>
+                <a href="/posts/delete/?id=<%=i._id%>&path=<%=i.postpic%>">X</a>
+            <%}%> -->
+            <% if(user.id==profile_user.id){ %>
+                <h3>my Posts</h3>
+                <%}else{%>
+                    <h3>Posts</h3>
+               <%}%>
+                <div class="my-posts">
+                    <%for(i of allpostpics){%>
+                        <div class="one-post">
+                            <img src="<%=i.postpic%>" alt="">
+                            <p>
+                                <%=i.content%>
+                            </p>
+                            <a href="/posts/delete/?id=<%=i._id%>&path=<%=i.postpic%>">X</a>
+                        </div>
+                        <hr>
+                        <%}%>
+                </div>
+
+            </div>
+        </div>
+        <div class="right-container">
+            <h3>Friends</h3>
+            <div class="all-friends">
+                <ul class="friends-list">
+                    <%for(f of friendslist){%>
+                    <li><a href="/users/profile/<%= f.id %>"><%=f.name%></a></li>
+                    <%}%>
+                </ul>
+            </div>
+        </div>
+        
+            <!-- * -->
+            <% if(user.id==profile_user.id){ %>
+                <!-- if user matches then show the form -->
+                <!-- <img src="<%=user.avatar%>" alt="<%=user.name%>" width="100" >
     <form action="/users/update/<%= profile_user.id %>" enctype="multipart/form-data" method="POST">
         <input type="text" name="name" placeholder="Your Name" value="<%= profile_user.name %>" required>
         <input type="email" name="email" placeholder="Your Email" value="<%= profile_user.email %>" required>
         <input type="file" name="avatar" placeholder="profile pic" >
         <input type="submit"  value="Update">
-    </form>
+    </form> -->
 
-    <form action="/posts/postpic" enctype="multipart/form-data" method="POST">
+                <!-- <form action="/posts/postpic" enctype="multipart/form-data" method="POST">
         <input type="file" name="postpic">
         <input type="text" name="content" placeholder="add caption">
         <input type="submit" value="post">
-    </form>
-    
-<%}else{%>    
-    <!-- else show only the profile info -->
-    <img src="<%=profile_user.avatar%>" alt="<%=profile_user.name%>" width="100" >
-    <p><%= profile_user.name %></p>
-    <p><%= profile_user.email %></p>
-    <a href="/users/friends/?id=<%=profile_user.id%>"><button><%=cur%></button></a>
-<%} %>
+    </form> -->
 
-<%for(i of allpostpics){%>
-      <img src="<%=i.postpic%>" alt="" width="100">
-      <p><%=i.content%></p>
-      <a href="/posts/delete/?id=<%=i._id%>&path=<%=i.postpic%>">X</a>
-<%}%>
+                <%}else{%>
+                    <!-- else show only the profile info -->
+                    <!-- <img src="<%=profile_user.avatar%>" alt="<%=profile_user.name%>" width="100">
+                    <p>
+                        <%= profile_user.name %>
+                    </p>
+                    <p>
+                        <%= profile_user.email %>
+                    </p>
+                    <a href="/users/friends/?id=<%=profile_user.id%>"><button>
+                            <%=cur%>
+                        </button></a> -->
+                    <%} %>
+
+
+
+</div>

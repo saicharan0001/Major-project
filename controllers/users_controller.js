@@ -3,6 +3,7 @@ const passport = require('passport');
 const fs = require('fs');
 const path = require('path');
 const Postpic = require('../models/postpic');
+const Friends = require('../models/friendship');
 
 module.exports.users = function (req, res) {
     res.send('iam at user');
@@ -92,14 +93,17 @@ module.exports.profile = async (req, res) => {
     else{
         cur = 'Follow'
     }
-    let allpostpics = await Postpic.find({user:req.params.id});
+    let allpostpics = await Postpic.find({user:req.params.id}).sort('-createdAt');
+    let friendslist = await User.findById(req.params.id).populate('friends');
+    
     User.findById(req.params.id)
         .then((user) => {
             res.render('user_profile', {
                 title: 'User Profile',
                 profile_user: user,
                 cur: cur,
-                allpostpics : allpostpics
+                allpostpics : allpostpics,
+                friendslist : friendslist.friends
             });
         });
 }

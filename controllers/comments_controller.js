@@ -11,19 +11,16 @@ module.exports.create = async (req, res) => {
         })
         post.comments.push(comment)
         post.save();
+        // req.flash('success', 'Comment Successfull');
         if (req.xhr) {
             return res.json(200, {
                 message: 'Comment Created',
                 data: {
                     comment: comment,
                 },
-                flash: {
-                    success: 'Comment Successfull'
-                },
                 username: req.user.name
             })
         }
-        req.flash('success', 'Comment Successfull');
         return res.redirect('back');
     } catch (err) {
         req.flash('error', 'Error in posting comment');
@@ -44,7 +41,16 @@ module.exports.destroy = async (req, res) => {
                 likeable: req.params.id,
                 onModel: 'Comment'
             });
-            req.flash('success', 'Comment deleted');
+            // req.flash('success', 'Comment deleted');
+            // send the comment id which was deleted back to the views
+            if (req.xhr){
+                return res.status(200).json({
+                    data: {
+                        comment_id: req.params.id
+                    },
+                    message: "Post deleted"
+                });
+            }
             return res.redirect('back');
         }
         return res.redirect('back');

@@ -49,7 +49,7 @@ module.exports.toggleLike = async function(req, res){
         }
 
 
-        return res.redirect('back');
+        // return res.redirect('back');
         return res.json(200, {
             message: "Request successful!",
             data: {

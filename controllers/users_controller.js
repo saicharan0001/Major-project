@@ -2,6 +2,7 @@ const User = require('../models/users');
 const passport = require('passport');
 const fs = require('fs');
 const path = require('path');
+const Postpic = require('../models/postpic');
 
 module.exports.users = function (req, res) {
     res.send('iam at user');
@@ -68,7 +69,7 @@ module.exports.destroySession = (req, res) => {
     req.logout((err) => {
         if (err) return next(err);
         req.flash('success', 'You are Logged out');
-        return res.redirect('/');
+        return res.redirect('/users/sign-in');
     })
 }
 
@@ -91,12 +92,14 @@ module.exports.profile = async (req, res) => {
     else{
         cur = 'Follow'
     }
+    let allpostpics = await Postpic.find({user:req.params.id});
     User.findById(req.params.id)
         .then((user) => {
             res.render('user_profile', {
                 title: 'User Profile',
                 profile_user: user,
-                cur: cur
+                cur: cur,
+                allpostpics : allpostpics
             });
         });
 }

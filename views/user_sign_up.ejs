@@ -1,4 +1,5 @@
-<h1>Sign Up</h1>
+<link rel="stylesheet" href="/css/user_signin.css">
+<!-- <h1>Sign Up</h1>
 
 <form action="/users/create" method="POST">
     <input type="text" name="name" placeholder="Your Name" required>
@@ -7,7 +8,22 @@
     <input type="password" name="confirm_password" placeholder="Confirm Password" required>
     <input type="submit" value="Sign Up">
 
-</form>
-<p>
+</form> -->
+
+<!-- <p>
     <a href="/users/auth/google">Google sign-in/sign-up</a>
-</p>
+</p> -->
+
+<div class="log-form">
+    <h2>Sign Up</h2>
+    <form action="/users/create" method="POST">
+        <input type="text" name="name" placeholder="Your Name" required>
+        <input type="email"  name="email" placeholder="Your Email" required>
+        <input type="password"  name="password" placeholder="Password" required>
+        <input type="password"  name="confirm_password" placeholder="Confirm Password" required>
+        <input type="submit" class="btn" value="Sign up">
+    </form>
+    <p style="padding-left: 20px;">
+        Sign in with <a href="/users/auth/google">Google </a>
+    </p>
+</div>

@@ -10,6 +10,12 @@
         <input type="file" name="avatar" placeholder="profile pic" >
         <input type="submit"  value="Update">
     </form>
+
+    <form action="/posts/postpic" enctype="multipart/form-data" method="POST">
+        <input type="file" name="postpic">
+        <input type="text" name="content" placeholder="add caption">
+        <input type="submit" value="post">
+    </form>
     
 <%}else{%>    
     <!-- else show only the profile info -->
@@ -18,3 +24,8 @@
     <p><%= profile_user.email %></p>
     <a href="/users/friends/?id=<%=profile_user.id%>"><button><%=cur%></button></a>
 <%} %>
+
+<%for(i of allpostpics){%>
+      <img src="<%=i.postpic%>" alt="" width="100">
+      <p><%=i.content%></p>
+<%}%>

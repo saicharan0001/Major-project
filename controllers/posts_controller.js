@@ -3,6 +3,10 @@ const Post = require('../models/posts');
 const passport = require('passport');
 const Comment = require('../models/comment');
 const Like = require('../models/like');
+const fs = require('fs');
+const path = require('path');
+const Postpic = require('../models/postpic');
+
 module.exports.create = async (req, res) => {
     try {
         const post = await Post.create({
@@ -18,7 +22,7 @@ module.exports.create = async (req, res) => {
                 flash: {
                     success: 'Posted!'
                 },
-                username : req.user.name
+                username: req.user.name
             })
         }
         req.flash('success', 'Posted!');
@@ -38,9 +42,9 @@ module.exports.destroy = async (req, res) => {
             await Post.findByIdAndDelete(req.params.id);
             await Comment.deleteMany({ post: req.params.id });
             await Like.deleteMany({
-                user : req.user.id,
-                likeable : req.params.id,
-                onModel : 'Post'
+                user: req.user.id,
+                likeable: req.params.id,
+                onModel: 'Post'
             });
             // await Like.deleteMany(id: {$in: post.comments});
             if (req.xhr) {
@@ -64,3 +68,20 @@ module.exports.destroy = async (req, res) => {
     }
 
 }
+
+module.exports.postpic = (req, res) => {
+
+    Postpic.uploadedPostpic(req, res, async function (err) {
+        if (err) console.log(err);
+        console.log(req.file);
+        await Postpic.create({
+            user : req.user.id,
+            postpic : Postpic.postpicPath + '/' + req.file.filename,
+            content : req.body.content
+        })
+        return res.redirect('back');
+    })
+
+    // return res.redirect('back');
+}
+

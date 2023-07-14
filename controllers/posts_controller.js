@@ -75,13 +75,20 @@ module.exports.postpic = (req, res) => {
         if (err) console.log(err);
         console.log(req.file);
         await Postpic.create({
-            user : req.user.id,
-            postpic : Postpic.postpicPath + '/' + req.file.filename,
-            content : req.body.content
+            user: req.user.id,
+            postpic: Postpic.postpicPath + '/' + req.file.filename,
+            content: req.body.content
         })
         return res.redirect('back');
     })
 
     // return res.redirect('back');
+}
+
+module.exports.delete = async (req, res) => {
+    console.log(req.query);
+    await Postpic.deleteOne({ _id: req.query.id });
+    fs.unlinkSync(path.join(__dirname, '..', req.query.path));
+    return res.redirect('back');
 }
 

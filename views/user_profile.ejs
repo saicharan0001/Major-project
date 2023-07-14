@@ -28,4 +28,5 @@
 <%for(i of allpostpics){%>
       <img src="<%=i.postpic%>" alt="" width="100">
       <p><%=i.content%></p>
+      <a href="/posts/delete/?id=<%=i._id%>&path=<%=i.postpic%>">X</a>
 <%}%>

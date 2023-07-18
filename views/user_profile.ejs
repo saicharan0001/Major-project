@@ -12,7 +12,7 @@
                 <p id="user-bio" style="font-size: large;">Lorem ipsum dolor, sit amet consectetur</p>
                 <% if(user.id!=profile_user.id){ %>
                 <p id="btns">
-                <a href="/users/friends/?id=<%=profile_user.id%>" id="follow-btn"><button style="font-size: larger; color:white"><%=cur%></button></a>
+                <a href="/users/friends/?id=<%=profile_user.id%>"  id="follow-btn"><button style="font-size: larger; color:white" id="follow-button"><%=cur%></button></a>
                 <a href="" id="message-btn"><button style="font-size: larger; color:black">Message</button></a>
                 </p>
                 <%}%>
@@ -144,3 +144,4 @@
 
 
 </div>
+<script src="/js/user_profile.js"></script>

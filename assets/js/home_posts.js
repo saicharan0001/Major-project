@@ -213,11 +213,9 @@
 
                         <div class="post-comments-list">
                             <ul id="post-comments-${post._id}" style="display: none;">
-                                
                             </ul>
                         </div>
                     </div>
-                    
                 </li>`)
     }
 

@@ -10,7 +10,7 @@ module.exports.togglefriends = async (req, res) => {
     let user2 = await User.findById(myfriend);
     let allmyfriends = await User.findById(me).populate('friends');
     let myfriendsarray = allmyfriends.friends;//gives the friends array of me
-    console.log(myfriendsarray);
+    // console.log(myfriendsarray);
 
     let havefriend = false;
     for (i of myfriendsarray) {
@@ -44,6 +44,18 @@ module.exports.togglefriends = async (req, res) => {
         user1.save();
         user2.friends.push(me);
         user2.save();
+    }
+    if(req.xhr){
+        if(havefriend==false){
+          var data = 'Unfollow';
+        }
+        else{
+            data = 'Follow';
+        }
+        return res.json(200,{
+            message : 'success',
+            data : data
+        })
     }
     return res.redirect('back');
 }

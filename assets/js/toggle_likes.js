@@ -29,7 +29,7 @@ class ToggleLike{
 
 
                 $(self).attr('data-likes', likesCount);
-                $(self).html(`${likesCount} Likes`);
+                $(self).html(`<i class="fa fa-heart" style="font-size:20px;color:red"></i> ${likesCount} `);
 
             })
             .fail(function(errData) {

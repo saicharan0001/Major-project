@@ -99,7 +99,12 @@
             <div class="all-friends">
                 <ul class="friends-list">
                     <%for(f of friendslist){%>
-                    <li><a href="/users/profile/<%= f.id %>"><%=f.name%></a></li>
+                        
+                    <li >
+                        <a href="/users/profile/<%= f.id %>" style="display:flex;align-items: center;">
+                            <img src="<%=f.avatar%>" style="width:30px;border-radius: 50%;padding:5px" alt="">
+                            <%=f.name%></a>
+                    </li>
                     <%}%>
                 </ul>
             </div>

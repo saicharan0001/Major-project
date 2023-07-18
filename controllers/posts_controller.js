@@ -13,6 +13,8 @@ module.exports.create = async (req, res) => {
             content: req.body.content,
             user: req.user._id
         })
+
+        // post = post.populate('user');
         if (req.xhr) {
             return res.status(200).json({
                 data: {
@@ -22,7 +24,10 @@ module.exports.create = async (req, res) => {
                 flash: {
                     success: 'Posted!'
                 },
-                username: req.user.name
+                userdetails: {
+                    username : req.user.name,
+                    avatar:req.user.avatar
+                },
             })
         }
         req.flash('success', 'Posted!');

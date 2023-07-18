@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        
+    </style>
+</head>
+<body>
+    <div id="home-container">
+        <section id="feed-posts">
+            <h4>Posts</h4>
+    
+            <form action="/posts/create" id="new-post-form" method="POST">
+                <textarea name="content" cols="30" rows="3" placeholder="Type Here..." required></textarea>
+                <input type="submit" value="Post">
+            </form>
+    
+    
+            <div id="posts-list-container">
+                <ul>
+                    <li id="post-<%= post._id %>">
+                        <p>
+                            <small>
+                                <a class="delete-post-button" href="/posts/destroy/<%= post.id %>">X</a>
+                            </small>
+                            Hello Guys Good morning
+                            <br>
+                            <small>
+                                <img src="<%=post.user.avatar%>" alt="">
+                                <p>Saicharan</p>
+                            </small>
+    
+                            <small>
+                                <a class="toggle-like-button" data-likes="<%= post.likes.length %>"
+                                    href="/likes/toggle/?id=<%=post._id%>&type=Post">
+                                    100 Likes
+                                </a>
+                            </small>
+    
+                        </p>
+                        <div class="post-comments">
+                            <form action="/comments/create" id="post-<%= post._id %>-comments-form" method="POST">
+                                <input type="text" name="content" placeholder="Type Here to add comment..." required>
+                                <input type="hidden" name="post" value="<%= post._id %>">
+                                <input type="submit" value="Add Comment">
+                            </form>
+    
+                            <div class="post-comments-list">
+                                <ul id="post-comments-<%= post._id %>">
+    
+                                    <li id="comment-<%= comment._id %>">
+                                        <p>
+                                            <small>
+                                                <a class="delete-comment-button"
+                                                    href="/comments/destroy/<%= comment.id %>">X</a>
+                                            </small>
+                                            <p>This is a Comment</p>
+                                            <small>
+                                                <img src="<%=post.user.avatar%>" alt="">
+                                                <p>Saicharan</p>
+                                            </small>
+                                            <small>
+                                                <a class="toggle-like-button" data-likes="<%= comment.likes.length %>"
+                                                    href="/likes/toggle/?id=<%=comment._id%>&type=Comment">
+                                                   1000 Likes
+                                                </a>
+                                            </small>
+    
+                                        </p>
+    
+                                    </li>
+    
+                                </ul>
+                            </div>
+                        </div>
+    
+                    </li>
+                </ul>
+            </div>
+        </section>
+    </div>
+</body>
+</html>

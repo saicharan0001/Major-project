@@ -11,6 +11,7 @@ module.exports.create = async (req, res) => {
         })
         post.comments.push(comment)
         post.save();
+
         // req.flash('success', 'Comment Successfull');
         if (req.xhr) {
             return res.json(200, {
@@ -18,7 +19,8 @@ module.exports.create = async (req, res) => {
                 data: {
                     comment: comment,
                 },
-                username: req.user.name
+                username: req.user.name,
+                useravatar : req.user.avatar
             })
         }
         return res.redirect('back');
@@ -31,7 +33,7 @@ module.exports.create = async (req, res) => {
 module.exports.destroy = async (req, res) => {
     try {
         const comment = await Comment.findById(req.params.id)
-        if (comment.user == req.user.id) {
+        // if (comment.user == req.user.id) {
             let postId = comment.post;
             await Comment.findByIdAndDelete(req.params.id)
             //deleting that comment id in comments array of postId in Post
@@ -52,8 +54,7 @@ module.exports.destroy = async (req, res) => {
                 });
             }
             return res.redirect('back');
-        }
-        return res.redirect('back');
+        // }
     } catch (err) {
         console.log('err', err);
     }

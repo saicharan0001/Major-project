@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f2f2f2;
+        }
+
+        .posts-list-container {
+            /* margin: 0 auto; */
+            max-width: 600px;
+            /* padding: 20px; */
+            border: none;
+            /* Remove the border */
+            border: 2px solid red;
+        }
+
+        .post-item {
+            margin-bottom: 20px;
+            padding: 10px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        .post-item p {
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+
+        .delete-post-button,
+        .delete-comment-button {
+            color: #fff;
+            background-color: #ff0000;
+            text-decoration: none;
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .delete-post-button:hover,
+        .delete-comment-button:hover {
+            background-color: #ff5555;
+        }
+
+        .post-author {
+            font-weight: bold;
+            font-size: 16px;
+            display: inline;
+            /* Display the username inline */
+        }
+
+        .toggle-like-button {
+            color: #0000ff;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .post-comments {
+            margin-top: 10px;
+        }
+
+        .comment-input {
+            display: flex;
+            width: 100%;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .comment-input input[type="text"] {
+            flex: 1;
+            padding: 5px;
+            border: none;
+            outline: none;
+            /* Remove the black border on clicking */
+        }
+
+        .comment-submit-button {
+            padding: 5px;
+            border: none;
+            cursor: pointer;
+            font-size: 20px;
+            background-color: transparent;
+        }
+
+
+        .comment-submit-button:hover {
+            background-color: transparent;
+        }
+
+        .comment-list {
+            padding: 0;
+            list-style: none;
+            /* Hide the comment list by default */
+        }
+
+        .comment-item {
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        .comment-text {
+            margin-bottom: 5px;
+            line-height: 1.4;
+        }
+
+        .comment-author {
+            font-weight: bold;
+            font-size: 14px;
+            display: inline;
+            /* Display the username inline */
+        }
+
+        .love-symbol {
+            font-size: 20px;
+            color: red;
+            margin-right: 5px;
+        }
+
+        .like-count {
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        .like-wrapper {
+            display: flex;
+            align-items: center;
+        }
+
+        .avatar {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            margin-right: 5px;
+            vertical-align: middle;
+            /* Align the avatar vertically with the username */
+        }
+
+        .arrow-up,
+        .arrow-down {
+            font-size: 20px;
+            color: #000;
+            cursor: pointer;
+            margin-right: 5px;
+        }
+
+        .comment-text-small {
+            font-size: 12px;
+            color: #888;
+        }
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 80px;
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+            border-radius: 5px;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .dropdown-content a {
+            color: #000;
+            padding: 5px 10px;
+            text-decoration: none;
+            display: block;
+            cursor: pointer;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #ddd;
+        }
+
+        ul {
+            padding: 0;
+            list-style-type: none;
+        }
+    </style>
+</head>
+
+<body>
+
+
+    <div class="posts-list-container">
+        <ul>
+            <li class="post-item">
+                <p>
+                <div class="dropdown">
+                    <span class="dropdown-toggle">&#8942;</span>
+                    <div class="dropdown-content">
+                        <a href="/posts/destroy/<%= post.id %>">Delete</a>
+                    </div>
+                </div>
+                <small>
+                    <img src="../uploads/users/postpics/postpic-1689359031618-9655963" alt="" class="avatar">
+                    <span class="post-author">Saicharan</span>
+                </small>
+                <br>
+                Hello Guys, Good morning
+                <br>
+                <small>
+                    <a class="toggle-like-button" data-likes="100" href="/likes/toggle/?id=<%=post._id%>&type=Post">
+                        <span class="like-wrapper">
+                            <span class="love-symbol">&#10084;</span>
+                            <span class="like-count">100</span>
+                        </span>
+                    </a>
+                </small>
+                <span class="arrow-down" id="comment-list-1-arrow">&#8681;</span>
+                <span class="comment-text-small">Comments</span>
+                </p>
+                <div class="post-comments">
+                    <form action="/comments/create" id="post-<%= post._id %>-comments-form" method="POST">
+                        <div class="comment-input">
+                            <input type="text" name="content" placeholder="Type Here to add comment..." required>
+                            <button type="submit" class="comment-submit-button">&#10148;</button>
+                        </div>
+                        <input type="hidden" name="post" value="<%= post._id %>">
+                    </form>
+
+                    <div class="post-comments-list">
+                        <ul class="comment-list" id="comment-list-1" id="post-comments-<%= post._id %>">
+                            <li class="comment-item">
+                                <div class="dropdown">
+                                    <span class="dropdown-toggle">&#8942;</span>
+                                    <div class="dropdown-content">
+                                        <a href="/comments/destroy/<%= comment.id %>">Delete</a>
+                                    </div>
+                                </div>
+                                <small>
+                                    <img src="../uploads/users/postpics/postpic-1689359031618-9655963" alt=""
+                                        class="avatar">
+                                    <span class="comment-author">Saicharan</span>
+                                </small>
+                                <br>
+                                <span class="comment-text">This is a Comment</span>
+                                <br>
+                                <small>
+                                    <a class="toggle-like-button" data-likes="100"
+                                        href="/likes/toggle/?id=<%=comment._id%>&type=Comment">
+                                        <span class="like-wrapper">
+                                            <span class="love-symbol">&#10084;</span>
+                                            <span class="like-count">100</span>
+                                        </span>
+                                    </a>
+                                </small>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+
+
+</body>
+
+</html>

@@ -1,10 +1,225 @@
 #home-container {
-  display: flex; }
-  #home-container #feed-posts {
-    width: 70%;
-    padding: 10px; }
-  #home-container #user-friends {
-    width: 30%;
+  margin: 0 5vw;
+  display: flex;
+  justify-content: space-around; }
+  #home-container ul {
+    list-style-type: none; }
+  #home-container #imp-links {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.089);
+    width: 20vw;
+    height: 80vh;
+    border-radius: 8px;
     padding: 10px;
-    border-left: 1px solid lightgrey;
-    height: 100%; }
+    display: flex;
+    flex-direction: column;
+    align-items: center; }
+  #home-container .image-container {
+    width: 200px;
+    /* Adjust the width to your desired size */
+    height: 200px;
+    /* Adjust the height to your desired size */
+    margin-bottom: 50px;
+    overflow: hidden;
+    border-radius: 50%;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); }
+  #home-container .image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* Maintain aspect ratio and cover the container */
+    display: block; }
+  #home-container #imp-links ul {
+    list-style: none;
+    margin: 0;
+    width: 70%;
+    padding: 0; }
+  #home-container #imp-links li {
+    margin-bottom: 20px;
+    width: 100%; }
+  #home-container #imp-links a {
+    display: block;
+    padding: 10px;
+    text-decoration: none;
+    color: #fff;
+    background-color: #007bff;
+    border-radius: 4px; }
+  #home-container #imp-links a:hover {
+    background-color: #0056b3; }
+  #home-container #feed-posts {
+    /* Styling for the post container */
+    /* Styling for the post content */
+    /* Styling for the delete button */
+    /* Styling for the post author avatar */
+    /* Styling for post author name and likes */
+    /* Styling for the comment input and button */
+    /* Styling for the comments list */
+    /* Styling for the like button */
+    /* Styling for the like button on hover */ }
+    #home-container #feed-posts .form-container {
+      display: flex;
+      align-items: center;
+      width: 39vw;
+      /* Adjust the width as needed */
+      padding: 10px;
+      border: 3px solid #ffffff;
+      /* Customize the border thickness */
+      border-radius: 4px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      /* Add box shadow */ }
+    #home-container #feed-posts .user-image {
+      margin-right: 10px;
+      /* Adjust the spacing as needed */ }
+    #home-container #feed-posts .user-image img {
+      width: 40px;
+      /* Adjust the size as needed */
+      height: 40px;
+      border-radius: 50%;
+      /* To make the image circular */ }
+    #home-container #feed-posts .input-container {
+      display: flex;
+      flex: 1; }
+    #home-container #feed-posts textarea {
+      flex: 1;
+      resize: none;
+      /* Disable resizing */
+      padding: 8px;
+      border: none;
+      border-radius: 4px;
+      background-color: #ffffff;
+      /* Customize the background color */
+      outline: none;
+      /* Remove the black border on focus */
+      width: 100%;
+      /* Increase the width */
+      overflow: auto;
+      /* Enable scrolling */
+      scrollbar-width: none;
+      /* Hide the scrollbar for Firefox */
+      -ms-overflow-style: none;
+      /* Hide the scrollbar for Internet Explorer and Edge */ }
+    #home-container #feed-posts textarea::-webkit-scrollbar {
+      display: none;
+      /* Hide the scrollbar for Chrome, Safari, and Opera */ }
+    #home-container #feed-posts textarea::-webkit-resizer {
+      display: none;
+      /* Hide the resize handle for Chrome, Safari, and Opera */ }
+    #home-container #feed-posts button.post-button {
+      padding: 4px;
+      /* Adjust the padding as needed */
+      margin-left: 10px;
+      /* Add spacing to the left */
+      background-color: transparent;
+      /* Remove the background color */
+      color: #4CAF50;
+      /* Customize the text color */
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 24px;
+      /* Increase the font size */ }
+    #home-container #feed-posts button.post-button:hover {
+      color: #45a049;
+      /* Customize the hover text color */ }
+    #home-container #feed-posts #posts-list-container {
+      width: 40vw;
+      height: 70vh;
+      overflow: scroll; }
+    #home-container #feed-posts #posts-list-container::-webkit-scrollbar {
+      display: none; }
+    #home-container #feed-posts .comment-form {
+      border: none; }
+    #home-container #feed-posts #posts-list-container li,
+    #home-container #feed-posts .post-comments-list li {
+      background-color: #f9f9f9;
+      padding: 10px;
+      margin-bottom: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px; }
+    #home-container #feed-posts p {
+      font-size: 16px;
+      line-height: 1.5;
+      margin: 0; }
+    #home-container #feed-posts .delete-post-button,
+    #home-container #feed-posts .delete-comment-button {
+      color: #ff0000;
+      /* Red color for the delete buttons */
+      text-decoration: none;
+      margin-right: 5px; }
+    #home-container #feed-posts img {
+      vertical-align: middle; }
+    #home-container #feed-posts small {
+      margin-right: 10px; }
+    #home-container #feed-posts .post-comments form input[type="text"] {
+      width: 100%;
+      padding: 5px;
+      margin-bottom: 5px;
+      border: 1px solid #ddd;
+      border-radius: 3px; }
+    #home-container #feed-posts .post-comments form input[type="submit"] {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 14px;
+      border-radius: 3px;
+      cursor: pointer; }
+    #home-container #feed-posts .post-comments form input[type="submit"]:hover {
+      background-color: #45a049; }
+    #home-container #feed-posts .post-comments-list {
+      margin-top: 10px; }
+    #home-container #feed-posts .post-comments-list li {
+      margin-bottom: 5px;
+      padding: 5px;
+      border: 1px solid #ddd;
+      border-radius: 3px;
+      background-color: #f9f9f9; }
+    #home-container #feed-posts .toggle-like-button {
+      color: #08c;
+      text-decoration: none;
+      margin-left: 10px; }
+    #home-container #feed-posts .toggle-like-button:hover {
+      text-decoration: underline; }
+  #home-container #friends-list {
+    width: 20vw;
+    height: 80vh;
+    border-radius: 8px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #fff;
+    /* Set a white background */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.089); }
+    #home-container #friends-list h3 {
+      margin-bottom: 15px;
+      color: #333; }
+    #home-container #friends-list ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      width: 80%; }
+      #home-container #friends-list ul li {
+        display: flex;
+        align-items: center;
+        padding: 8px;
+        border-radius: 4px;
+        width: 90%;
+        /* Set li width to 90% of #friends-list width */
+        background-color: #007bff;
+        color: #fff;
+        margin-bottom: 20px; }
+        #home-container #friends-list ul li a {
+          text-decoration: none;
+          color: #fff;
+          display: flex;
+          align-items: center; }
+          #home-container #friends-list ul li a img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            margin-right: 20px; }
+        #home-container #friends-list ul li:hover {
+          background-color: #0056b3; }

@@ -1,57 +1,67 @@
 <link rel="stylesheet" href="/css/home.css">
 
-<div id="home-container">
-    <section id="feed-posts">
-        <h4>Posts</h4>
-        <% if(locals.user){ %>
-            <form action="/posts/create" id="new-post-form"  method="POST">
-                <textarea name="content" cols="30" rows="3" placeholder="Type Here..." required></textarea>
-                <input type="submit" value="Post">
-            </form>
-            <% } %>
+<% if(locals.user){ %>
+    <div id="home-container">
+        <section id="imp-links">
+            <div class="image-container">
+                <img src="<%=user.avatar%>" alt="Image Description">
+            </div>
+            <ul>
+                <li><a href="users/profile/<%=user.id%>">Profile</a></li>
+                <li><a href="#">Likes</a></li>
+                <li><a href="#">Comments</a></li>
+                <li><a href="#">Explore</a></li>
+                <li><a href="#">Know Relation<small
+                            style="margin-left:5px;border-radius:5px;padding:2px 6px;background-color: red;">new</small></a>
+                </li>
+            </ul>
+        </section>
 
-                <div id="posts-list-container">
-                    <ul>
-                        <% for(post of posts){ %>
-
-                            <%- include('_post') -%>
-
-                                <%} %>
-                    </ul>
+        <section id="feed-posts">
+            <div class="form-container">
+                <div class="user-image">
+                    <img src="<%=user.avatar%>" alt="User Image">
                 </div>
-    </section>
+                <form action="/posts/create" id="new-post-form" method="POST">
+                    <div class="input-container">
+                        <textarea name="content" placeholder="Type Here..." cols="70" required></textarea>
+                        <button type="submit" class="post-button">&#10148;</button>
+                    </div>
+                </form>
+            </div>
 
 
-    <section id="user-friends">
-        <h4>All users</h4>
-        <% for(u of all_users){%>
-            <p>
-                <a href="/users/profile/<%= u.id %>">
-                    <%= u.name %>
-                </a>
-            </p>
-            <% } %>
-                <h4>Friends</h4>
-        <% if(locals.user){ %>
-            <% for(a of allfriends){%>
-                <p>
-                    <a href="/users/profile/<%= a.id %>">
-                        <%= a.name %>
-                    </a>
-                </p>
-                <% } %>
-        <%}%>
-    </section>
-</div>
+            <div id="posts-list-container">
+                <ul style="padding: 0px;">
+                    <% for(post of posts){ %>
 
-<script src="/js/home_post_comments.js" ></script>
-<script src="/js/home_posts.js"></script>
+                        <%- include('_post') -%>
 
-<!-- CHANGE :: import the script file for toggle likes, also run it over for the already present posts and comments on the page -->
-<script src="js/toggle_likes.js"></script>
-<script>
-    $('.toggle-like-button').each(function(){
-        let self = this;
-        let toggleLike = new ToggleLike(self);
-    });
-</script>
+                            <%} %>
+                </ul>
+            </div>
+        </section>
+        <section id="friends-list">
+            <h3>Friends</h3>
+            <ul>
+                <%for(a of allfriends){%>
+                <li><a href="/users/profile/<%=a._id%>">
+                        <img src="<%=a.avatar%>" alt="">
+                        <%=a.name%>
+                    </a></li>
+                <%}%>
+            </ul>
+        </section>
+    </div>
+    <% } %>
+        <script src="/js/home_post_comments.js"></script>
+        <script src="/js/home_posts.js"></script>
+
+        <!-- CHANGE :: import the script file for toggle likes, also run it over for the already present posts and comments on the page -->
+        <script src="js/toggle_likes.js"></script>
+        <script>
+            $('.toggle-like-button').each(function () {
+                let self = this;
+                let toggleLike = new ToggleLike(self);
+            });
+        </script>

@@ -139,7 +139,6 @@
 
         newPostForm.submit(function (e) {
             e.preventDefault();
-
             $.ajax({
                 type: 'post',
                 url: '/posts/create',
@@ -147,6 +146,7 @@
                 success: function (data) {
                     let newPost = newPostDom(data.data.post, data.userdetails);
                     $('#posts-list-container>ul').prepend(newPost);
+                    $('#text-area').val("");
                     deletePost($(' .delete-post-button', newPost));
 
                     // call the create comment class
@@ -202,14 +202,17 @@
                     <div class="post-comments">
                         
                             <form id="post-${post._id}-comments-form" action="/comments/create" method="POST">
-                                <input type="text" name="content" placeholder="Type Here to add comment..." required style="width:85%;border: none;outline: none;">
+                                <input type="text" name="content" placeholder="Type Here to add comment..." required style="width:85%;border: none;outline: none;" id="input-comment-${post._id}">
                                 <input type="hidden" name="post" value="${post._id}" >
                                 <input type="submit" value="&#10148;">
                             </form>
                
-                
+                            <div class="comments-collapse" id="comment-collapse-${post._id}" style="cursor:pointer;" onclick="togglecomments('${post._id}')">
+                            ▶ Comments
+                        </div>
+
                         <div class="post-comments-list">
-                            <ul id="post-comments-${post._id}">
+                            <ul id="post-comments-${post._id}" style="display: none;">
                                 
                             </ul>
                         </div>
@@ -273,6 +276,20 @@
 
     createPost();
     convertPostsToAjax();
+}
+
+function togglecomments(postid){
+   let obj = document.getElementById(`post-comments-${postid}`)
+   let obj2 = document.getElementById(`comment-collapse-${postid}`)
+    if(obj.style.display=='block'){
+        obj.style.display='none'; 
+        obj2.innerText = '▶ Comments';
+    }
+    else{
+        obj.style.display = 'block';
+        obj2.innerText = '▼ Comments';
+    }
+    return;
 }
 
 // let wordform = $('.word-post-form');

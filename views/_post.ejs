@@ -23,13 +23,16 @@
     <div class="post-comments">
         <form action="/comments/create" id="post-<%= post._id %>-comments-form" method="POST" class="comment-form">
             <input type="text" name="content" placeholder="Type Here to add comment..." required
-                style="width:85%;border: none;outline: none;">
+                style="width:85%;border: none;outline: none;" id="input-comment-<%=post._id%>">
             <input type="hidden" name="post" value="<%= post._id %>">
             <input type="submit" value="&#10148;">
         </form>
+        <div class="comments-collapse" id="comment-collapse-<%=post._id%>" style="cursor:pointer;" onclick="togglecomments('<%= post._id %>')">
+            ▶ Comments
+        </div>
 
-        <div class="post-comments-list">
-            <ul id="post-comments-<%= post._id %>">
+        <div class="post-comments-list" >
+            <ul id="post-comments-<%= post._id %>" style="display: none;">
                 <% for (comment of post.comments){%>
 
                     <%- include('_comment') -%>

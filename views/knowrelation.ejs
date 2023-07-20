@@ -1,0 +1,15 @@
+<div class="find-relation-container" style="text-align: center;">
+<h2>Find Your relation</h2>
+
+<form action="/findrelation" method="post">
+    <input type="text" name="relation" placeholder="Type Username" style="width: 20vw;height:30px;">
+    <input type="submit" value="find" style=" padding:5px; background-color: #007bff;border:none;font-size: large; border-radius: 3px;color:white">
+</form>
+
+    <%for(i in data){%>
+        <p><%=data[i]%></p>
+         <%if(i!=data.length-1){%>
+            ↓
+         <%}%>
+    <%}%>
+</div>

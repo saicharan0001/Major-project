@@ -60,7 +60,6 @@ module.exports.findRelation = async (req, res) => {
     let theirid = their._id;
     let allusers = await User.find({});
     let mpp = [];
-    //    let x=0;
     for (i of allusers) {
         mpp[i._id] = i.friends;
         // console.log(i._id,mpp[i._id]);
@@ -122,5 +121,5 @@ module.exports.findRelation = async (req, res) => {
         title: 'knowrelation',
         data: finalans,
     })
-    return res.redirect('back');
+    // return res.redirect('back');
 }

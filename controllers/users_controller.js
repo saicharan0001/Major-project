@@ -135,3 +135,11 @@ module.exports.update = async (req, res) => {
         return res.status(401).send('Unautharized');
     }
 }
+
+module.exports.allusers = async (req,res)=>{
+    const allusers = await User.find({});
+    return res.render('allusers',{
+        title:'allusers',
+        allusers :allusers
+    })
+}
